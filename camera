@@ -1,0 +1,38 @@
+#include <opencv2/opencv.hpp>
+#include <iostream>
+
+int main() {
+    // Open the default camera (usually the built-in webcam)
+    cv::VideoCapture cap(0);
+
+    // Check if the camera opened successfully
+    if (!cap.isOpened()) {
+        std::cerr << "Error: Camera not opened successfully" << std::endl;
+        return -1;
+    }
+
+    cv::Mat frame;
+
+    // Capture a single frame
+    cap >> frame;
+
+    // Check if the frame is empty
+    if (frame.empty()) {
+        std::cerr << "Error: Frame is empty" << std::endl;
+        return -1;
+    }
+
+    // Display the captured frame in a window
+    cv::imshow("Captured Frame", frame);
+
+    // Wait for a key press indefinitely
+    cv::waitKey(0);
+
+    // Save the captured frame to a file
+    if (!cv::imwrite("captured_image.jpg", frame)) {
+        std::cerr << "Error: Could not save image" << std::endl;
+        return -1;
+    }
+
+    return 0;
+}
